@@ -1,0 +1,27 @@
+<mat-toolbar color="primary">
+    <!-- <button [disabled]="isDisabled" mat-icon-button class="example-icon" aria-label="Example icon-button with menu icon"> -->
+    <button
+        mat-icon-button
+        class="example-icon"
+        aria-label="Example icon-button with menu icon"
+        (click)="onClick()"
+    >
+      <mat-icon class="class1">menu</mat-icon>
+    </button>
+    <!-- <img [style.width.px]="iconSize" [src]="shopIconSrc" [class.shop-icon]="isDisabled"> -->
+    <img [src]="shopIconSrc" class="shop-icon">
+    <!-- <img src="{{shopIconSrc}}" class="shop-icon"> -->
+    <span>{{title}}</span>
+    <span class="example-spacer"></span>
+    <button mat-icon-button class="example-icon favorite-icon" aria-label="Example icon-button with heart icon">
+      <mat-icon>favorite</mat-icon>
+    </button>
+    <button
+        mat-icon-button
+        class="example-icon"
+        aria-label="Example icon-button with share icon"
+        (click)="onShare(); $event.stopPropagation()"
+    >
+      <mat-icon>share</mat-icon>
+    </button>
+</mat-toolbar>
