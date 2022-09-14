@@ -1,0 +1,21 @@
+<mat-card class="product-card">
+    <mat-card-title-group class="title-group">
+        <mat-card-title>{{card.name}}</mat-card-title>
+        <div class="img-carousel">
+            <div class="img-item" *ngFor="let img of card.images">
+                <img mat-card-xl-image src="{{img.url}}"/><br/>
+            </div>
+        </div>
+    </mat-card-title-group>
+    <div class="price"><span>{{priceLabel}}</span> {{card.price}} $</div>
+    <div class="rate"><span>{{rateLabel}}</span> {{card.rating}}</div>
+    <div class="feedback"><span>{{feedbackLabel}}</span> {{card.feedbacksCount}}</div>
+    <button
+        mat-raised-button
+        color="primary"
+        class="buy-btn"
+        (click)="onBuy(); $event.stopPropagation()">
+        <mat-icon>shopping_cart</mat-icon><span>В корзину</span>
+    </button>
+    <div class="hidden buy-message">{{buyMessage}}</div>
+</mat-card>

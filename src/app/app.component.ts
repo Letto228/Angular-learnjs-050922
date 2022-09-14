@@ -21,4 +21,8 @@ export class AppComponent {
 	onKeyDown(event: Event) {
 		console.log(event);
 	}
+
+    onProductCardClick() {
+        console.log('Product card clicked!');
+    }
 }
