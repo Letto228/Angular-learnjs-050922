@@ -1,4 +1,5 @@
 import { Component, ViewEncapsulation } from '@angular/core';
+import { productMock } from './shared/products/product.mock';
 
 @Component({
 	selector: 'app-root',
@@ -9,6 +10,7 @@ import { Component, ViewEncapsulation } from '@angular/core';
 })
 export class AppComponent {
 	title = 'Angular-learnjs-050922';
+	product = productMock;
 
 	// readonly window: Window = window;
 
