@@ -1,2 +1,12 @@
-<app-header (click)="onHeaderClick()"></app-header>
-<app-product-card></app-product-card>
+<app-header
+    [applicationConfig]="applicationConfig"
+    (menuClick)="sidenav.toggleSidenavOpened()"
+></app-header>
+<!-- <app-sidenav
+    [isSidenavOpened]="isSidenavOpened"
+    (isSidenavOpenedChange)="isSidenavOpened = $event"
+></app-sidenav> -->
+<!-- <app-sidenav
+    [(isSidenavOpened)]="isSidenavOpened"
+></app-sidenav> -->
+<app-sidenav #sidenav isSidenavOpened="true"></app-sidenav>
