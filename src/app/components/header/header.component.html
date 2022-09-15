@@ -3,12 +3,12 @@
         mat-icon-button
         class="example-icon"
         aria-label="Example icon-button with menu icon"
-        (click)="onClick()"
+        (click)="onMenuClick($event)"
     >
       <mat-icon class="class1">menu</mat-icon>
     </button>
-    <img [src]="shopIconSrc" class="shop-icon">
-    <span>{{title}}</span>
+    <img [src]="applicationConfig?.shopIconSrc" class="shop-icon" alt="icon">
+    <span>{{applicationConfig?.title}}</span>
     <span class="example-spacer"></span>
     <button mat-icon-button class="example-icon favorite-icon" aria-label="Example icon-button with heart icon">
       <mat-icon>favorite</mat-icon>

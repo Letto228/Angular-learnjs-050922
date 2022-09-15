@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { applicationConfigMock } from './shared/application-config/application-config.mock';
 
 @Component({
 	selector: 'app-root',
@@ -6,11 +7,19 @@ import { Component } from '@angular/core';
 	styleUrls: ['./app.component.less'],
 })
 export class AppComponent {
+	readonly applicationConfig = applicationConfigMock;
+
+	// isSidenavOpened = true;
+
 	onHeaderClick() {
 		console.log(window.location);
 	}
 
-	onKeyDown(event: Event) {
-		console.log(event);
-	}
+	// onMenuClick() {
+	// 	this.isSidenavOpened = !this.isSidenavOpened;
+	// }
+
+	// onKeyDown(event: Event) {
+	// 	console.log(event);
+	// }
 }
