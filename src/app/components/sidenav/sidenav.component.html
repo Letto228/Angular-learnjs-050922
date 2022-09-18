@@ -4,7 +4,9 @@
       <p>Auto-resizing sidenav</p>
     </mat-drawer>
   
-    <div class="example-sidenav-content">
+    <app-product-card [product]="productMock" (productBuyClick)="onProductBuy()" (click)="onProductCardClick()"></app-product-card>
+    <div class="product-buy-message" [ngClass]="{'hidden': isHidden}" >Товар добавлен в корзину</div>
+    <!-- <div class="example-sidenav-content">
       <input #textInput type="text" (input)="onInput($event)">
       {{textInput.value}}
 
@@ -16,7 +18,7 @@
       >
         Toggle sidenav
       </button>
-    </div>
+    </div> -->
 </mat-drawer-container>
 
 <ng-template #template>

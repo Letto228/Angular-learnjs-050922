@@ -20,6 +20,8 @@ import {
 	ViewContainerRef,
 } from '@angular/core';
 import { MatDrawer } from '@angular/material/sidenav';
+import { IProduct } from 'src/app/shared/products/product.interface';
+import { productMock } from 'src/app/shared/products/product.mock';
 
 @Component({
 	selector: 'app-sidenav',
@@ -32,14 +34,11 @@ export class SidenavComponent
 	implements
 		OnChanges,
 		OnInit,
-		DoCheck,
-		AfterContentInit,
-		AfterContentChecked,
-		AfterViewInit,
-		AfterViewChecked,
-		OnDestroy
+		AfterViewInit
 {
-	// @Input() isSidenavOpened = true;
+    readonly productMock = productMock;
+
+    // @Input() isSidenavOpened = true;
 
 	// @Output() isSidenavOpenedChange = new EventEmitter<boolean>(); // prefix = Input name postfix = "Change"
 
@@ -84,12 +83,6 @@ export class SidenavComponent
 		console.log(this.drawerElement);
 	}
 
-	ngDoCheck() {}
-
-	ngAfterContentInit() {}
-
-	ngAfterContentChecked() {}
-
 	ngAfterViewInit() {
 		// setTimeout(() => {
 		//   this.drawer.toggle();
@@ -97,7 +90,19 @@ export class SidenavComponent
 		console.log(this.drawerElement);
 	}
 
-	ngAfterViewChecked() {}
+    public isHidden = true;
+    private timeoutId:any = false;
 
-	ngOnDestroy() {}
+    onProductBuy() {
+        this.isHidden = false;
+        clearTimeout(this.timeoutId);
+        this.timeoutId = setTimeout(() => { this.isHidden = true; }, 2000);
+        // P.S. c RXJS пока не успел разобраться
+
+        console.log('Product buy clicked!');
+    }
+
+    onProductCardClick() {
+        console.log('Product card clicked!');
+    }
 }

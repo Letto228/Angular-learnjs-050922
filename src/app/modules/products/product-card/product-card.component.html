@@ -1,35 +1,30 @@
-<mat-card class="card">
-    <mat-card-header>
-      <mat-card-title>{{product.name}}</mat-card-title>
-      <mat-card-subtitle>{{product.price}} $</mat-card-subtitle>
-    </mat-card-header>
-    <div class="galerey">
-        <img mat-card-image [src]="product.images[0].url" alt="Product photo">
-    </div>
-    <div>
-      <p>
-        Отзывы: {{product.feedbacksCount}}
-      </p>
-      <div class="raiting">
-        Рейтинг:
-        <mat-icon [class.star-active]="isStarActive(1)">
-          star
-        </mat-icon>
-        <mat-icon [class.star-active]="isStarActive(2)">
-          star
-        </mat-icon>
-        <mat-icon [class.star-active]="isStarActive(3)">
-          star
-        </mat-icon>
-        <mat-icon [class.star-active]="isStarActive(4)">
-          star
-        </mat-icon>
-        <mat-icon [class.star-active]="isStarActive(5)">
-          star
-        </mat-icon>
-      </div>
-    </div>
-    <mat-card-actions class="mat-card-actions-align-end">
-      <button mat-button (click)="onProductBuy($event)">BUY</button>
-    </mat-card-actions>
-</mat-card>
+<div *ngIf="product; then productBlock else emptyBlock"></div>
+<ng-template #productBlock>
+    <mat-card class="card">
+        <mat-card-header>
+            <mat-card-title>{{product!.name}}</mat-card-title>
+            <mat-card-subtitle>{{product!.price}} $</mat-card-subtitle>
+        </mat-card-header>
+        <div class="galerey">
+            <img mat-card-image [src]="product!.images[0].url" alt="Product photo">
+        </div>
+        <div>
+            <p>
+                Отзывы: {{product!.feedbacksCount}}
+            </p>
+            <div class="raiting">
+                Рейтинг:
+                <mat-icon
+                    *ngFor="let i of [1,2,3,4,5]"
+                    [class.star-active]="isStarActive(i, product!.rating)"
+                >
+                    star
+                </mat-icon>
+            </div>
+        </div>
+        <mat-card-actions class="mat-card-actions-align-end">
+            <button mat-button (click)="onProductBuy($event)">BUY</button>
+        </mat-card-actions>
+    </mat-card>
+</ng-template>
+<ng-template #emptyBlock>Товар не найден</ng-template>
