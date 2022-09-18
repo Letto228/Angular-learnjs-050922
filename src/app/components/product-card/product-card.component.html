@@ -17,5 +17,5 @@
         (click)="onBuy(); $event.stopPropagation()">
         <mat-icon>shopping_cart</mat-icon><span>В корзину</span>
     </button>
-    <div class="hidden buy-message">{{buyMessage}}</div>
+    <div class="{{buyMessageClass}} buy-message">{{buyMessage}}</div>
 </mat-card>

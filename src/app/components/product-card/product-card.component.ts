@@ -20,6 +20,9 @@ export class ProductCardComponent implements OnInit {
 
     private timeoutId: any = null;
 
+    readonly buyMessageClass = 'hidden';
+
+
     constructor() {}
 
     onBuy() {
