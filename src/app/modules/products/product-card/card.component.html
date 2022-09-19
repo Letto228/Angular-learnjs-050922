@@ -1,0 +1,16 @@
+<mat-card class="example-card">
+  <mat-card-header>
+    <mat-card-title>{{card.name}}</mat-card-title>
+  </mat-card-header>
+  <img mat-card-lg-image src="{{card.images[0].url}}" alt="Photo of a Shiba Inu">
+  <mat-card-content>
+    <p>Цена: ${{card.price}}</p>
+    <p>Рейтинг: {{card.rating}}</p>
+  </mat-card-content>
+  <mat-card-actions>
+    <button mat-raised-button color="primary" (click)="onBuy($event)">
+      <span>Купить</span>
+      <mat-icon>add_shopping_cart</mat-icon>
+    </button>
+  </mat-card-actions>
+</mat-card>
