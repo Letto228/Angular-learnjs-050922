@@ -3,10 +3,41 @@
     (menuClick)="sidenav.toggleSidenavOpened()"
 ></app-header>
 <!-- <app-sidenav
-    [isSidenavOpened]="isSidenavOpened"
-    (isSidenavOpenedChange)="isSidenavOpened = $event"
-></app-sidenav> -->
-<!-- <app-sidenav
-    [(isSidenavOpened)]="isSidenavOpened"
-></app-sidenav> -->
-<app-sidenav #sidenav isSidenavOpened="true"></app-sidenav>
+    #sidenav
+    isSidenavOpened="true"
+    [navigationTemplate]="navigationTemplate"
+> -->
+<app-sidenav #sidenav>
+    <mat-form-field class="example-full-width" appearance="fill">
+        <mat-label>Search</mat-label>
+        <input #input matInput>
+    </mat-form-field>
+    <p
+        appInsertShadow
+        [appNgClass]="{
+            'search-active': input.value,
+            'search-has-secret': input.value === '123'
+        }"
+    >
+        {{input.value}}
+    </p>
+
+    <!-- <ng-container ngProjectAs="list">
+        <p>1</p>
+        <p>2</p>
+        <p>3</p>
+    </ng-container> -->
+    <!-- <mat-list role="list">
+        <mat-list-item role="listitem">Item 1</mat-list-item>
+        <mat-list-item role="listitem">Item 2</mat-list-item>
+        <mat-list-item role="listitem">Item 3</mat-list-item>
+    </mat-list> -->
+
+    <ng-template #navigationTemplate>
+        <mat-list role="list">
+            <mat-list-item #list1 role="listitem">Item 1</mat-list-item>
+            <mat-list-item #list2 role="listitem">Item 2</mat-list-item>
+            <mat-list-item #list3 role="listitem">Item 3</mat-list-item>
+        </mat-list>
+    </ng-template>
+</app-sidenav>

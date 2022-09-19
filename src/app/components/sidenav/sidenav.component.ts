@@ -6,6 +6,8 @@ import {
 	Attribute,
 	ChangeDetectionStrategy,
 	Component,
+	ContentChild,
+	ContentChildren,
 	DoCheck,
 	ElementRef,
 	EventEmitter,
@@ -14,11 +16,13 @@ import {
 	OnDestroy,
 	OnInit,
 	Output,
+	QueryList,
 	SimpleChanges,
 	TemplateRef,
 	ViewChild,
 	ViewContainerRef,
 } from '@angular/core';
+import { MatListItem } from '@angular/material/list';
 import { MatDrawer } from '@angular/material/sidenav';
 
 @Component({
@@ -28,36 +32,47 @@ import { MatDrawer } from '@angular/material/sidenav';
 	// changeDetection: ChangeDetectionStrategy.OnPush
 })
 /* eslint-disable */
-export class SidenavComponent
-	implements
-		OnChanges,
-		OnInit,
-		DoCheck,
-		AfterContentInit,
-		AfterContentChecked,
-		AfterViewInit,
-		AfterViewChecked,
-		OnDestroy
-{
-	// @Input() isSidenavOpened = true;
+export class SidenavComponent implements OnInit, AfterContentInit, AfterViewInit {
+	// @Input() set navigationTemplate(template: TemplateRef<unknown>) {
+	// 	setTimeout(() => {
+	// 		this.insertNavigationTemplate(template);
+	// 	}, 1000)
+	// 	setTimeout(() => {
+	// 		this.insertNavigationTemplate(template);
+	// 	}, 3000)
+	// 	setTimeout(() => {
+	// 		this.insertNavigationTemplate(template);
+	// 	}, 5000)
+	// };
 
-	// @Output() isSidenavOpenedChange = new EventEmitter<boolean>(); // prefix = Input name postfix = "Change"
-
-	// @ViewChild('template') private templateRef!: TemplateRef<unknown>;
 	@ViewChild(MatDrawer, { static: true }) private drawer!: MatDrawer;
 	@ViewChild(MatDrawer, { read: ElementRef, static: false })
 	set drawerElementRef(elementRef: ElementRef | undefined) {
 		this.drawerElement = elementRef?.nativeElement;
 	}
 
+	@ViewChild('navigationViewPort', { read: ViewContainerRef, static: true })
+	private navigationViewPort!: ViewContainerRef;
+	@ContentChild('navigationTemplate', { static: false })
+	private navigationTemplate!: TemplateRef<unknown>;
+
+	@ContentChildren(MatListItem, { read: MatListItem, descendants: true })
+	private matListItems!: QueryList<MatListItem>;
+
 	drawerElement: HTMLElement | undefined;
 
-	constructor(@Attribute('isSidenavOpened') private readonly isSidenavOpenedAttr: boolean) {
-		console.log(this.isSidenavOpenedAttr);
-		// setTimeout(() => {
-		// console.log(this.drawerElement);
-		// }, 1000)
+	constructor() {}
+
+	ngOnInit() {
+		// this.insertNavigationTemplate(this.navigationTemplate);
 	}
+
+	ngAfterContentInit() {
+		this.insertNavigationTemplate(this.navigationTemplate);
+		console.log(this.matListItems);
+	}
+
+	ngAfterViewInit() {}
 
 	onInput(event: Event) {
 		console.log((event.target as HTMLInputElement).value);
@@ -65,39 +80,11 @@ export class SidenavComponent
 
 	toggleSidenavOpened() {
 		this.drawer.toggle();
-		// this.isSidenavOpenedChange.emit(this.drawer.opened);
-		// this.isSidenavOpenedChange.emit(!this.isSidenavOpened);
 	}
 
-	ngOnChanges({ isSidenavOpened }: SimpleChanges) {
-		if (isSidenavOpened) {
-			// isSidenavOpened.currentValue === this.isSidenavOpened
-			// const res = isSidenavOpened.previousValue < this.isSidenavOpened;
-			// const res = isSidenavOpened.previousValue < isSidenavOpened.currentValue;
-			console.log('isSidenavOpened');
-		}
+	private insertNavigationTemplate(template: TemplateRef<unknown>) {
+		this.navigationViewPort.clear();
+		this.navigationViewPort.createEmbeddedView(template);
+		// console.log(this.navigationViewPort.get(5));
 	}
-
-	ngOnInit() {
-		// console.log(this.isSidenavOpened);
-		// this.drawer.toggle()
-		console.log(this.drawerElement);
-	}
-
-	ngDoCheck() {}
-
-	ngAfterContentInit() {}
-
-	ngAfterContentChecked() {}
-
-	ngAfterViewInit() {
-		// setTimeout(() => {
-		//   this.drawer.toggle();
-		// })
-		console.log(this.drawerElement);
-	}
-
-	ngAfterViewChecked() {}
-
-	ngOnDestroy() {}
 }
