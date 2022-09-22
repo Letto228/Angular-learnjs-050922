@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
 import { IProduct } from '../../../shared/products/product.interface';
 import { productMock } from '../../../shared/products/product.mock';
 
@@ -9,13 +9,16 @@ import { productMock } from '../../../shared/products/product.mock';
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ProductCardComponent {
-	product: IProduct = productMock;
+	@Input() product: IProduct | undefined;
+	@Output() productBuy = new EventEmitter<IProduct['_id']>();
 
 	onProductBuy(event: Event) {
 		event.stopPropagation();
+
+		this.productBuy.emit(this.product?._id);
 	}
 
 	isStarActive(starIndex: number): boolean {
-		return this.product.rating >= starIndex;
+		return Boolean(this.product && this.product.rating >= starIndex);
 	}
 }
