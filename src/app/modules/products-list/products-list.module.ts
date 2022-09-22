@@ -6,10 +6,22 @@ import { MatIconModule } from '@angular/material/icon';
 import { ProductCardComponent } from './product-card/product-card.component';
 import { ProductsListComponent } from './products-list.component';
 import { MatInputModule } from '@angular/material/input';
+import { DumpNgIfModule } from '../../shared/dump-ng-if/dump-ng-if.module';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { CarouselModule } from '../../shared/carousel/carousel.module';
 
 @NgModule({
 	declarations: [ProductsListComponent, ProductCardComponent],
-	imports: [CommonModule, MatCardModule, MatButtonModule, MatIconModule, MatInputModule],
+	imports: [
+		CommonModule,
+		MatCardModule,
+		MatButtonModule,
+		MatIconModule,
+		MatInputModule,
+		DumpNgIfModule,
+		MatProgressSpinnerModule,
+		CarouselModule,
+	],
 	exports: [ProductsListComponent],
 })
 export class ProductsListModule {}

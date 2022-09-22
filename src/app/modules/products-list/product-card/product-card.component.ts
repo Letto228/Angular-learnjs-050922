@@ -16,6 +16,13 @@ export class ProductCardComponent {
 		this.productBuy.emit(this.product?._id);
 	}
 
+	nextItem!: () => void;
+	backItem!: () => void;
+
+	onRegistrBack(callback: () => void) {
+		this.backItem = callback;
+	}
+
 	isStarActive(starIndex: number): boolean {
 		return Boolean(this.product && this.product.rating >= starIndex);
 	}

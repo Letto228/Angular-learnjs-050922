@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { Observable, of } from 'rxjs';
+import { IProduct } from '../../shared/products/product.interface';
 import { productsMock } from '../../shared/products/products.mock';
 
 @Component({
@@ -7,5 +9,17 @@ import { productsMock } from '../../shared/products/products.mock';
 	styleUrls: ['./products-list.component.less'],
 })
 export class ProductsListComponent {
-	readonly products = productsMock;
+	products: IProduct[] | null = null;
+
+	// get productsList(): IProduct[] | null {
+	// 	console.log('productsList')
+
+	// 	return this.products;
+	// }
+
+	constructor() {
+		setTimeout(() => {
+			this.products = productsMock;
+		}, 3000);
+	}
 }
