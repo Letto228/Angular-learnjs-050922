@@ -1,0 +1,10 @@
+<mat-form-field class="example-full-width" appearance="fill">
+    <mat-label>Search</mat-label>
+    <input #input matInput>
+</mat-form-field>
+<p>{{input.value}}</p>
+
+<app-product-card [product]="products[0]"></app-product-card>
+<app-product-card [product]="products[1]"></app-product-card>
+<app-product-card [product]="products[2]"></app-product-card>
+<app-product-card [product]="products[3]"></app-product-card>

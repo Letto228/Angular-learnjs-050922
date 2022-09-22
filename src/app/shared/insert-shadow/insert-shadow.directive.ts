@@ -12,10 +12,4 @@ export class InsertShadowDirective {
 		console.log(pageX);
 		this.boxShadow = this.boxShadow ? '' : 'inset 0 0 10px #000';
 	}
-
-	// constructor() {
-	//   setTimeout(() => {
-	//     this.boxShadow = 'inset 0 0 10px #000';
-	//   }, 2000)
-	// }
 }

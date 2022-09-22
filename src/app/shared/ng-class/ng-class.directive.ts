@@ -24,7 +24,6 @@ export class NgClassDirective implements OnChanges {
 				.filter(([_className, value]) => Boolean(value))
 				.forEach(([className]) => {
 					this.element.classList.add(className);
-					// применяем имя класса к элементу - classList.add(className);
 				});
 
 			return;
@@ -35,13 +34,11 @@ export class NgClassDirective implements OnChanges {
 			.forEach(([className, value]) => {
 				if (value) {
 					this.element.classList.add(className);
-					// применяем имя класса к элементу - classList.add(className);
 
 					return;
 				}
 
 				this.element.classList.remove(className);
-				// удаляем имя класса - classList.remove(className);
 			});
 	}
 }

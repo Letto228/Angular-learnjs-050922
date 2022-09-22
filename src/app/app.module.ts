@@ -5,12 +5,11 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HeaderModule } from './components/header/header.module';
-import { ProductCardModule } from './modules/products/product-card/product-card.module';
 import { SidenavModule } from './components/sidenav/sidenav.module';
-import { MatInputModule } from '@angular/material/input';
 import { MatListModule } from '@angular/material/list';
 import { NgClassModule } from './shared/ng-class/ng-class.module';
 import { InsertShadowModule } from './shared/insert-shadow/insert-shadow.module';
+import { ProductsListModule } from './modules/products-list/products-list.module';
 
 @NgModule({
 	declarations: [AppComponent],
@@ -19,9 +18,8 @@ import { InsertShadowModule } from './shared/insert-shadow/insert-shadow.module'
 		AppRoutingModule,
 		BrowserAnimationsModule,
 		HeaderModule,
-		ProductCardModule,
+		ProductsListModule,
 		SidenavModule,
-		MatInputModule,
 		MatListModule,
 		NgClassModule,
 		InsertShadowModule,
