@@ -1,14 +1,14 @@
 <mat-card class="card">
     <mat-card-header>
-      <mat-card-title>{{product.name}}</mat-card-title>
-      <mat-card-subtitle>{{product.price}} $</mat-card-subtitle>
+      <mat-card-title>{{product?.name}}</mat-card-title>
+      <mat-card-subtitle>{{product?.price}} $</mat-card-subtitle>
     </mat-card-header>
     <div class="galerey">
-        <img mat-card-image [src]="product.images[0].url" alt="Product photo">
+        <img mat-card-image [src]="product?.images?.[0]?.url" alt="Product photo">
     </div>
     <div>
       <p>
-        Отзывы: {{product.feedbacksCount}}
+        Отзывы: {{product?.feedbacksCount}}
       </p>
       <div class="raiting">
         Рейтинг:
