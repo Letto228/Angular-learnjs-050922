@@ -1,7 +1,11 @@
 <app-header
     [applicationConfig]="applicationConfig"
-    (menuClick)="sidenav.toggleSidenavOpened()"
 ></app-header>
+
+<!--app-header
+    [applicationConfig]="applicationConfig"
+    (menuClick)="sidenav.toggleSidenavOpened()"
+></app-header-->
 <!-- <app-sidenav
     [isSidenavOpened]="isSidenavOpened"
     (isSidenavOpenedChange)="isSidenavOpened = $event"
@@ -9,4 +13,6 @@
 <!-- <app-sidenav
     [(isSidenavOpened)]="isSidenavOpened"
 ></app-sidenav> -->
-<app-sidenav #sidenav isSidenavOpened="true"></app-sidenav>
+<!--app-sidenav #sidenav isSidenavOpened="true"></app-sidenav-->
+
+<app-product-card [product] = "product"></app-product-card>

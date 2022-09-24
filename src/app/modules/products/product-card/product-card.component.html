@@ -1,35 +1,17 @@
-<mat-card class="card">
+
+<mat-card class="example-card">
     <mat-card-header>
-      <mat-card-title>{{product.name}}</mat-card-title>
-      <mat-card-subtitle>{{product.price}} $</mat-card-subtitle>
+      <div mat-card-avatar class="example-header-image"></div>
+      <mat-card-title>{{product?.name}}</mat-card-title>
+      <mat-card-subtitle>Код товара:  {{product?.code}} </mat-card-subtitle>
     </mat-card-header>
-    <div class="galerey">
-        <img mat-card-image [src]="product.images[0].url" alt="Product photo">
-    </div>
-    <div>
+    <img mat-card-image src="https://mesto-mebeli.ru/image/cache/800-600/data/spalni/spalnye-garnitury/romeo/6.jpg" alt="Photo of romeo">
+    <mat-card-content>
       <p>
-        Отзывы: {{product.feedbacksCount}}
+        {{product?.description}}
       </p>
-      <div class="raiting">
-        Рейтинг:
-        <mat-icon [class.star-active]="isStarActive(1)">
-          star
-        </mat-icon>
-        <mat-icon [class.star-active]="isStarActive(2)">
-          star
-        </mat-icon>
-        <mat-icon [class.star-active]="isStarActive(3)">
-          star
-        </mat-icon>
-        <mat-icon [class.star-active]="isStarActive(4)">
-          star
-        </mat-icon>
-        <mat-icon [class.star-active]="isStarActive(5)">
-          star
-        </mat-icon>
-      </div>
-    </div>
-    <mat-card-actions class="mat-card-actions-align-end">
-      <button mat-button (click)="onProductBuy($event)">BUY</button>
+    </mat-card-content>
+    <mat-card-actions>
+        <button mat-raised-button color="primary" (click)="onClickBay(); $event.stopPropagation()">BAY NOW</button> 
     </mat-card-actions>
 </mat-card>
