@@ -12,3 +12,37 @@
 .loader {
 	margin: 20px auto;
 }
+
+.container {
+	padding: 10px 0;
+	display: flex;
+	flex-direction: column;
+	overflow: auto;
+	height: 100%;
+}
+
+.product {
+	margin: 10px;
+}
+
+.pagination-container {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.pagination {
+	&__page-number {
+		cursor: pointer;
+
+		&_active {
+			color: rgb(0, 13, 255);
+		}
+	}
+}
+
+.card-container {
+	display: flex;
+	justify-content: center;
+	flex-wrap: wrap;
+}

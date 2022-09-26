@@ -9,6 +9,7 @@ import { MatInputModule } from '@angular/material/input';
 import { DumpNgIfModule } from '../../shared/dump-ng-if/dump-ng-if.module';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { CarouselModule } from '../../shared/carousel/carousel.module';
+import { PaginationModule } from '../../shared/pagination/pagination.module';
 
 @NgModule({
 	declarations: [ProductsListComponent, ProductCardComponent],
@@ -21,6 +22,7 @@ import { CarouselModule } from '../../shared/carousel/carousel.module';
 		DumpNgIfModule,
 		MatProgressSpinnerModule,
 		CarouselModule,
+		PaginationModule,
 	],
 	exports: [ProductsListComponent],
 })
