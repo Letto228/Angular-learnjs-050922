@@ -9,6 +9,8 @@ import { MatInputModule } from '@angular/material/input';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { CarouselModule } from '../../shared/carousel/carousel.module';
 import { PaginationModule } from '../../shared/pagination/pagination.module';
+import { LetModule } from '../../shared/let/let.module';
+import { GetJsonModule } from '../../shared/get-json/get-json.module';
 
 @NgModule({
 	declarations: [ProductsListComponent, ProductCardComponent],
@@ -21,6 +23,8 @@ import { PaginationModule } from '../../shared/pagination/pagination.module';
 		MatProgressSpinnerModule,
 		CarouselModule,
 		PaginationModule,
+		LetModule,
+		GetJsonModule,
 	],
 	exports: [ProductsListComponent],
 })
