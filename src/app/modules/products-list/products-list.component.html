@@ -12,13 +12,58 @@
     <app-product-card [product]="products[3]"></app-product-card>
 </ng-template> -->
 <!-- <ng-container *ngIf="products as productsList; else loader"> -->
-<ng-container *ngIf="products; else loader">
-    <app-product-card [product]="products[0]"></app-product-card>
-    <app-product-card [product]="products[1]"></app-product-card>
-    <app-product-card [product]="products[2]"></app-product-card>
-    <app-product-card [product]="products[3]"></app-product-card>
-</ng-container>
-
+<div *ngIf="products; else loader" class="container">
+    <ng-container *appPagination="
+        let productsGroup of products;
+        elementsSize: 4;
+        let allIndexes = allIndexes;
+        let activeIndex = index;
+        let nextItem = nextItem;
+        let backItem = backItem;
+        let selectIndex = selectIndex
+    ">
+        <div class="card-container">
+            <app-product-card
+                class="product"
+                [product]="productsGroup[0]"
+            ></app-product-card>
+            <app-product-card
+                class="product"
+                [product]="productsGroup[1]"
+            ></app-product-card>
+            <app-product-card
+                class="product"
+                [product]="productsGroup[2]"
+            ></app-product-card>
+            <app-product-card
+                class="product"
+                [product]="productsGroup[3]"
+            ></app-product-card>
+        </div>
+    
+        <div class="pagination-container">
+            <button mat-icon-button (click)="backItem()">
+                <mat-icon>
+                    chevron_left
+                </mat-icon>
+            </button>
+            <button
+                mat-icon-button
+                *ngFor="let index of allIndexes"
+                class="pagination__page-number"
+                [class.pagination__page-number_active]="activeIndex === index"
+                (click)="selectIndex(index)"
+            >
+                {{index}}
+            </button>
+            <button mat-icon-button (click)="nextItem()">
+                <mat-icon>
+                    chevron_right
+                </mat-icon>
+            </button>
+        </div>
+    </ng-container>
+</div>
 <!-- <ng-template [appDumpNgIf]="true" let-value let-age="age" let-fn="fn">
     {{value}}
     {{age}}

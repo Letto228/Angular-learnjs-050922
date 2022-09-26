@@ -1,146 +1,119 @@
-import { Directive, Input, OnDestroy, OnInit, TemplateRef, ViewContainerRef } from '@angular/core';
+import {
+	Directive,
+	Input,
+	OnChanges,
+	OnDestroy,
+	OnInit,
+	SimpleChanges,
+	TemplateRef,
+	ViewContainerRef,
+} from '@angular/core';
 import { BehaviorSubject, map, Subject, takeUntil } from 'rxjs';
+import { groupingItemsByElementsSize } from './utils';
 
 interface IPaginationContext<T> {
-	$implicit: T;
+	$implicit: T | T[];
 	appPaginationOf: T[]; // нет необходимости
 	index: number;
+	allIndexes: number[];
 	nextItem: () => void;
 	backItem: () => void;
+	selectIndex: (index: number) => void;
 }
 
 @Directive({
 	selector: '[appPagination]',
 })
-export class PaginationDirective<T> implements OnInit, OnDestroy {
-	@Input() set appPaginationOf(items: T[] | undefined) {
-		if (!items?.length) {
-			this.viewContainerRef.clear();
+export class PaginationDirective<T> implements OnInit, OnChanges, OnDestroy {
+	@Input() appPaginationElementsSize = 1;
+	@Input() appPaginationOf: T[] | undefined | null;
 
-			return;
-		}
-
-		this.items = items;
-		this.currentIndex$.next(0);
-	}
-
-	// @Output() emitNext = new EventEmitter<() => void>();
-	// @Output() emitBack = new EventEmitter<() => void>();
-
-	private items: T[] | null = null;
+	private groupedItems: Array<T[]> | T[] = [];
 
 	private readonly currentIndex$ = new BehaviorSubject<number>(0);
-	// private readonly subscription = new Subscription();
 	private readonly destroy$ = new Subject<void>();
 
-	constructor(
-		private readonly viewContainerRef: ViewContainerRef,
-		private readonly templateRef: TemplateRef<IPaginationContext<T>>,
-	) {}
+	constructor(private viewContainerRef: ViewContainerRef, private templateRef: TemplateRef<IPaginationContext<T>>) {}
+
+	ngOnChanges({ appPaginationOf, appPaginationElementsSize }: SimpleChanges): void {
+		if (appPaginationOf || appPaginationElementsSize) {
+			if (!this.appPaginationOf?.length) {
+				this.viewContainerRef.clear();
+
+				return;
+			}
+
+			this.groupedItems = this.getGroupedItems(this.appPaginationOf);
+			this.currentIndex$.next(0);
+		}
+	}
 
 	ngOnInit() {
 		this.listenCurrentIndexChange();
-		// this.emitNext.emit(
-		//   () => {
-		//     this.nextItem()
-		//   }
-		// )
-		// this.emitBack.emit(this.backItem.bind(this))
 	}
 
 	ngOnDestroy() {
-		// this.subscription.unsubscribe();
 		this.destroy$.next();
 		this.destroy$.complete();
 	}
 
+	private getGroupedItems(items: T[]): Array<T[]> | T[] {
+		return this.appPaginationElementsSize <= 1
+			? items
+			: groupingItemsByElementsSize(items, this.appPaginationElementsSize);
+	}
+
 	private listenCurrentIndexChange() {
-		// this.subscription.add(
 		this.currentIndex$
 			.pipe(
-				map((index) => this.getCurrentContext(index)),
+				map((index) => this.getCurrentContext(index, this.groupedItems)),
 				takeUntil(this.destroy$),
 			)
 			.subscribe((context) => {
 				this.viewContainerRef.clear();
 				this.viewContainerRef.createEmbeddedView(this.templateRef, context);
 			});
-		// )
 	}
 
-	private getCurrentContext(activeIndex: number): IPaginationContext<T> {
-		const items = this.items as T[];
-
+	private getCurrentContext(activeIndex: number, items: Array<T[]> | T[]): IPaginationContext<T> {
 		return {
 			$implicit: items[activeIndex],
-			appPaginationOf: items,
 			index: activeIndex,
+			allIndexes: items.map((_, index) => index),
+			appPaginationOf: this.appPaginationOf as T[],
 			nextItem: () => {
 				this.nextItem();
 			},
-			backItem: this.backItem.bind(this),
+			backItem: () => {
+				this.backItem();
+			},
+			selectIndex: (index: number) => {
+				this.selectIndex(index);
+			},
 		};
 	}
 
 	private nextItem() {
 		const nextIndex = this.currentIndex$.value + 1;
 
-		if (!this.items?.length) {
+		if (!this.groupedItems?.length) {
 			return;
 		}
 
-		this.currentIndex$.next(nextIndex < this.items.length ? nextIndex : 0);
+		this.currentIndex$.next(nextIndex < this.groupedItems.length ? nextIndex : 0);
 	}
 
 	private backItem() {
 		const prevIndex = this.currentIndex$.value - 1;
 
-		if (!this.items?.length) {
+		if (!this.groupedItems?.length) {
 			return;
 		}
 
-		this.currentIndex$.next(prevIndex >= 0 ? prevIndex : this.items.length - 1);
+		this.currentIndex$.next(prevIndex >= 0 ? prevIndex : this.groupedItems.length - 1);
+	}
+
+	private selectIndex(index: number) {
+		this.currentIndex$.next(index);
 	}
 }
-// @Directive({
-//   selector: '[appPagination]'
-// })
-// export class PaginationDirective<T> implements OnChanges {
-//   @Input() appPaginationOf: T[] | undefined;
-
-//   constructor(
-//     private readonly viewContainerRef: ViewContainerRef,
-//     private readonly templateRef: TemplateRef<IPaginationContext<T>>,
-//   ) {}
-
-//   ngOnChanges({appPaginationOf}: SimpleChanges): void {
-//     if (appPaginationOf) {
-//       this.resetView()
-//     }
-//   }
-
-//   private resetView() {
-//     if (this.appPaginationOf?.length) {
-//       this.updateView(0);
-
-//       return;
-//     }
-
-//     this.viewContainerRef.clear();
-//   }
-
-//   private updateView(activeIndex: number) {
-//     const currentContext = this.getCurrentContext(activeIndex, this.appPaginationOf as T[]);
-
-//     this.viewContainerRef.clear();
-//     this.viewContainerRef.createEmbeddedView(this.templateRef, currentContext);
-//   }
-
-//   private getCurrentContext(activeIndex: number, items: T[]): IPaginationContext<T> {
-//     return {
-//       $implicit: items[activeIndex],
-//       appPagination: items,
-//       index: activeIndex,
-//     }
-//   }
-// }
