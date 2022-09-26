@@ -13,12 +13,6 @@ export class DumpNgIfDirective<T> {
 		private readonly templateRef: TemplateRef<unknown>,
 	) {}
 
-	// ngOnChanges({appDumpNgIf}: SimpleChanges): void {
-	//   if (appDumpNgIf) {
-	//     this.updateView();
-	//   }
-	// }
-
 	private updateView(value: T | undefined) {
 		const isContainerHasView = this.viewContainerRef.length;
 

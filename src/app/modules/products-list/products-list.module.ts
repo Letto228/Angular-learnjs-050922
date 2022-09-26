@@ -6,7 +6,6 @@ import { MatIconModule } from '@angular/material/icon';
 import { ProductCardComponent } from './product-card/product-card.component';
 import { ProductsListComponent } from './products-list.component';
 import { MatInputModule } from '@angular/material/input';
-import { DumpNgIfModule } from '../../shared/dump-ng-if/dump-ng-if.module';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { CarouselModule } from '../../shared/carousel/carousel.module';
 import { PaginationModule } from '../../shared/pagination/pagination.module';
@@ -19,7 +18,6 @@ import { PaginationModule } from '../../shared/pagination/pagination.module';
 		MatButtonModule,
 		MatIconModule,
 		MatInputModule,
-		DumpNgIfModule,
 		MatProgressSpinnerModule,
 		CarouselModule,
 		PaginationModule,

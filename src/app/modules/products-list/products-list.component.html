@@ -4,14 +4,6 @@
 </mat-form-field>
 <p>{{input.value}}</p>
 
-<!-- <ng-template [ngIf]="products" [ngIfElse]="loader" let-productsList> -->
-<!-- <ng-template [ngIf]="products" [ngIfElse]="loader">
-    <app-product-card [product]="products[0]"></app-product-card>
-    <app-product-card [product]="products[1]"></app-product-card>
-    <app-product-card [product]="products[2]"></app-product-card>
-    <app-product-card [product]="products[3]"></app-product-card>
-</ng-template> -->
-<!-- <ng-container *ngIf="products as productsList; else loader"> -->
 <div *ngIf="products; else loader" class="container">
     <ng-container *appPagination="
         let productsGroup of products;
@@ -64,11 +56,6 @@
         </div>
     </ng-container>
 </div>
-<!-- <ng-template [appDumpNgIf]="true" let-value let-age="age" let-fn="fn">
-    {{value}}
-    {{age}}
-    {{fn()}}
-</ng-template> -->
 
 <ng-template #loader>
     <mat-spinner class="loader"></mat-spinner>

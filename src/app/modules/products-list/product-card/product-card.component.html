@@ -3,41 +3,26 @@
       <mat-card-title>{{product?.name}}</mat-card-title>
       <mat-card-subtitle>{{product?.price}} $</mat-card-subtitle>
     </mat-card-header>
-    <!-- <ng-template
-      let-img
-      appCarousel
-      [appCarouselOf]="product?.images"
-      (emitNext)="nextItem = $event"
-      (emitBack)="onRegistrBack($event)"
-    > -->
-    <!-- <ng-template
-      let-img
-      let-backItem="backItem"
-      let-nextItem="nextItem"
-      appCarousel
-      [appCarouselOf]="product?.images"
-    > -->
-      <div
-        *appCarousel="
-          let img of product?.images as appCarouselOf;
-          let backItem = backItem;
-          let nextItem = nextItem;
-        "
-        class="galerey"
-      >
-          <button mat-icon-button (click)="backItem()">
-            <mat-icon>
-              chevron_left
-            </mat-icon>
-          </button>
-          <img mat-card-image [src]="img.url" alt="Product photo">
-          <button mat-icon-button (click)="nextItem()">
-            <mat-icon>
-              chevron_right
-            </mat-icon>
-          </button>
-      </div>
-    <!-- </ng-template> -->
+    <div
+      *appCarousel="
+        let img of product?.images as appCarouselOf;
+        let backItem = backItem;
+        let nextItem = nextItem;
+      "
+      class="galerey"
+    >
+        <button mat-icon-button (click)="backItem()">
+          <mat-icon>
+            chevron_left
+          </mat-icon>
+        </button>
+        <img mat-card-image [src]="img.url" alt="Product photo">
+        <button mat-icon-button (click)="nextItem()">
+          <mat-icon>
+            chevron_right
+          </mat-icon>
+        </button>
+    </div>
     <div>
       <p>
         Отзывы: {{product?.feedbacksCount}}

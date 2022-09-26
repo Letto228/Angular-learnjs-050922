@@ -7,8 +7,6 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HeaderModule } from './components/header/header.module';
 import { SidenavModule } from './components/sidenav/sidenav.module';
 import { MatListModule } from '@angular/material/list';
-import { NgClassModule } from './shared/ng-class/ng-class.module';
-import { InsertShadowModule } from './shared/insert-shadow/insert-shadow.module';
 import { ProductsListModule } from './modules/products-list/products-list.module';
 
 @NgModule({
@@ -21,8 +19,6 @@ import { ProductsListModule } from './modules/products-list/products-list.module
 		ProductsListModule,
 		SidenavModule,
 		MatListModule,
-		NgClassModule,
-		InsertShadowModule,
 	],
 	bootstrap: [AppComponent],
 })

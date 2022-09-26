@@ -13,7 +13,7 @@ import { groupingItemsByElementsSize } from './utils';
 
 interface IPaginationContext<T> {
 	$implicit: T | T[];
-	appPaginationOf: T[]; // нет необходимости
+	appPaginationOf: T[];
 	index: number;
 	allIndexes: number[];
 	nextItem: () => void;

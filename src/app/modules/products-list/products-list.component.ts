@@ -11,12 +11,6 @@ import { productsMock } from '../../shared/products/products.mock';
 export class ProductsListComponent {
 	products: IProduct[] | null = null;
 
-	// get productsList(): IProduct[] | null {
-	// 	console.log('productsList')
-
-	// 	return this.products;
-	// }
-
 	constructor() {
 		setTimeout(() => {
 			this.products = productsMock;
