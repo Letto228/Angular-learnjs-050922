@@ -11,21 +11,23 @@ import { CarouselModule } from '../../shared/carousel/carousel.module';
 import { PaginationModule } from '../../shared/pagination/pagination.module';
 import { LetModule } from '../../shared/let/let.module';
 import { GetJsonModule } from '../../shared/get-json/get-json.module';
+import { FilterByParamModule } from 'src/app/shared/filter-by-param/filter-by-param.module';
 
 @NgModule({
-	declarations: [ProductsListComponent, ProductCardComponent],
-	imports: [
-		CommonModule,
-		MatCardModule,
-		MatButtonModule,
-		MatIconModule,
-		MatInputModule,
-		MatProgressSpinnerModule,
-		CarouselModule,
-		PaginationModule,
-		LetModule,
-		GetJsonModule,
-	],
-	exports: [ProductsListComponent],
+  declarations: [ProductsListComponent, ProductCardComponent],
+  imports: [
+    CommonModule,
+    MatCardModule,
+    MatButtonModule,
+    MatIconModule,
+    MatInputModule,
+    MatProgressSpinnerModule,
+    CarouselModule,
+    PaginationModule,
+    LetModule,
+    GetJsonModule,
+    FilterByParamModule,
+  ],
+  exports: [ProductsListComponent],
 })
-export class ProductsListModule {}
+export class ProductsListModule { }
