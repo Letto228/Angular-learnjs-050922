@@ -14,6 +14,12 @@ import { MatDrawer } from '@angular/material/sidenav';
 	selector: 'app-sidenav',
 	templateUrl: './sidenav.component.html',
 	styleUrls: ['./sidenav.component.less'],
+	providers: [
+		// {
+		// 	provide: 'name',
+		// 	useValue: 'SidenavComponent',
+		// },
+	],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SidenavComponent implements AfterContentInit {

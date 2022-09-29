@@ -24,6 +24,12 @@ import { FilterByParamModule } from '../../shared/filter-by-param/filter-by-para
 		PaginationModule,
 		FilterByParamModule,
 	],
+	providers: [
+		{
+			provide: 'token',
+			useValue: 'ProductsListModule',
+		},
+	],
 	exports: [ProductsListComponent],
 })
 export class ProductsListModule {}
