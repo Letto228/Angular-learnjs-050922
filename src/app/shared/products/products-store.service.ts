@@ -1,12 +1,9 @@
-import { forwardRef, Injectable } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { AppModule } from '../../app.module';
 import { IProduct } from './product.interface';
 import { ProductsApiService } from './products-api.service';
-import { productsMock } from './products.mock';
 
 @Injectable({
-	// providedIn: forwardRef(() => AppModule),
 	providedIn: 'root',
 })
 export class ProductsStoreService {
@@ -22,8 +19,5 @@ export class ProductsStoreService {
 		this.productsApiService.getProducts$().subscribe((products) => {
 			this.productsStore$.next(products);
 		});
-		// setTimeout(() => {
-		//     this.productsStore$.next(productsMock);
-		// }, 2000)
 	}
 }
