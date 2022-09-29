@@ -4,7 +4,6 @@
 </mat-form-field>
 <p>{{input.value}}</p>
 
-<!-- <div *appLet="products as productsList" class="container"> -->
 <div *ngIf="products; else loader" class="container">
     <ng-container *appPagination="
         let productsGroup of (products | filterByParam : input.value : 'name');
@@ -15,19 +14,7 @@
         let backItem = backItem;
         let selectIndex = selectIndex
     ">
-    <!-- <ng-container *appPagination="
-        let productsGroup of products;
-        elementsSize: 4;
-        let allIndexes = allIndexes;
-        let activeIndex = index;
-        let nextItem = nextItem;
-        let backItem = backItem;
-        let selectIndex = selectIndex
-    "> -->
         <div class="card-container">
-            <!-- <p *ngFor="let product of productsGroup">
-                {{product | json}}
-            </p> -->
             <app-product-card
                 *ngFor="let product of productsGroup; trackBy: trackBy"
                 class="product"

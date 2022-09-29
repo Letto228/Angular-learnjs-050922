@@ -9,8 +9,6 @@ import { MatInputModule } from '@angular/material/input';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { CarouselModule } from '../../shared/carousel/carousel.module';
 import { PaginationModule } from '../../shared/pagination/pagination.module';
-import { LetModule } from '../../shared/let/let.module';
-import { GetJsonModule } from '../../shared/get-json/get-json.module';
 import { FilterByParamModule } from '../../shared/filter-by-param/filter-by-param.module';
 
 @NgModule({
@@ -24,8 +22,6 @@ import { FilterByParamModule } from '../../shared/filter-by-param/filter-by-para
 		MatProgressSpinnerModule,
 		CarouselModule,
 		PaginationModule,
-		LetModule,
-		GetJsonModule,
 		FilterByParamModule,
 	],
 	exports: [ProductsListComponent],

@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Pipe, PipeTransform } from '@angular/core';
+import { Pipe, PipeTransform } from '@angular/core';
 import { getJson } from './get-json.utils';
 
 @Pipe({
@@ -6,15 +6,7 @@ import { getJson } from './get-json.utils';
 	pure: true,
 })
 export class GetJsonPipe implements PipeTransform {
-	// constructor(
-	//   private readonly changeDetectorRef: ChangeDetectorRef,
-	// ) {}
-
-	// transform(value: any, additionalArggument: any, arg: any): string {
 	transform(value: any): string {
-		console.log('getJson Pipe');
-		// this.changeDetectorRef.markForCheck();
-
 		return getJson(value);
 	}
 }

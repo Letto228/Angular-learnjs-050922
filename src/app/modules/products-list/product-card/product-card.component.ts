@@ -1,13 +1,4 @@
-import {
-	ChangeDetectionStrategy,
-	Component,
-	EventEmitter,
-	Input,
-	OnChanges,
-	OnInit,
-	Output,
-	SimpleChanges,
-} from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
 import { IProduct } from '../../../shared/products/product.interface';
 
 @Component({
@@ -19,14 +10,6 @@ import { IProduct } from '../../../shared/products/product.interface';
 export class ProductCardComponent {
 	@Input() product: IProduct | undefined;
 	@Output() productBuy = new EventEmitter<IProduct['_id']>();
-
-	// ngOnInit() {
-	// 	console.log('ProductCardComponent');
-	// }
-
-	// ngOnChanges(changes: SimpleChanges): void {
-	// 	console.log('ngOnChanges', changes);
-	// }
 
 	onProductBuy(event: Event) {
 		event.stopPropagation();
