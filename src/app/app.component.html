@@ -10,3 +10,5 @@
     [(isSidenavOpened)]="isSidenavOpened"
 ></app-sidenav> -->
 <app-sidenav #sidenav isSidenavOpened="true"></app-sidenav>
+
+<app-product-card [product]="product" (onBuyClick)="onBuyClick($event)"></app-product-card>
