@@ -19,7 +19,14 @@
                 *ngFor="let product of productsGroup; trackBy: trackBy"
                 class="product"
                 [product]="product"
+                [routerLink]="'/product/' + product._id"
             ></app-product-card>
+            <!-- <app-product-card
+                *ngFor="let product of productsGroup; trackBy: trackBy"
+                class="product"
+                [product]="product"
+                (click)="navigate()"
+            ></app-product-card> -->
         </div>
     
         <div class="pagination-container">

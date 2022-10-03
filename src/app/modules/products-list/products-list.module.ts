@@ -10,6 +10,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { CarouselModule } from '../../shared/carousel/carousel.module';
 import { PaginationModule } from '../../shared/pagination/pagination.module';
 import { FilterByParamModule } from '../../shared/filter-by-param/filter-by-param.module';
+import { RouterModule } from '@angular/router';
 
 @NgModule({
 	declarations: [ProductsListComponent, ProductCardComponent],
@@ -23,6 +24,7 @@ import { FilterByParamModule } from '../../shared/filter-by-param/filter-by-para
 		CarouselModule,
 		PaginationModule,
 		FilterByParamModule,
+		RouterModule,
 	],
 	providers: [
 		{
