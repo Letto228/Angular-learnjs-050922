@@ -8,6 +8,7 @@ import { HeaderModule } from './components/header/header.module';
 import { SidenavModule } from './components/sidenav/sidenav.module';
 import { MatListModule } from '@angular/material/list';
 import { ProductsListModule } from './modules/products-list/products-list.module';
+import { ProductModule } from './modules/product/product.module';
 
 @NgModule({
 	declarations: [AppComponent],
@@ -16,9 +17,10 @@ import { ProductsListModule } from './modules/products-list/products-list.module
 		AppRoutingModule,
 		BrowserAnimationsModule,
 		HeaderModule,
-		ProductsListModule,
 		SidenavModule,
 		MatListModule,
+		ProductsListModule,
+		ProductModule,
 	],
 	bootstrap: [AppComponent],
 })
