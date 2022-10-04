@@ -1,14 +1,7 @@
-import {
-	AfterContentInit,
-	ChangeDetectionStrategy,
-	ChangeDetectorRef,
-	Component,
-	ContentChild,
-	TemplateRef,
-	ViewChild,
-	ViewContainerRef,
-} from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
 import { MatDrawer } from '@angular/material/sidenav';
+import { CategoriesStoreService } from '../../shared/categories/categories-store.service';
+import { ISubCategory } from '../../shared/categories/sub-category.interface';
 
 @Component({
 	selector: 'app-sidenav',
@@ -16,27 +9,24 @@ import { MatDrawer } from '@angular/material/sidenav';
 	styleUrls: ['./sidenav.component.less'],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class SidenavComponent implements AfterContentInit {
+export class SidenavComponent implements OnInit {
+	readonly categories$ = this.categoriesStoreService.categories$;
+
 	@ViewChild(MatDrawer, { static: true }) private drawer!: MatDrawer;
 
-	@ViewChild('navigationViewPort', { read: ViewContainerRef, static: true })
-	private navigationViewPort!: ViewContainerRef;
-	@ContentChild('navigationTemplate', { static: false })
-	private navigationTemplate!: TemplateRef<unknown>;
+	constructor(
+		private readonly changeDetectorRef: ChangeDetectorRef,
+		private readonly categoriesStoreService: CategoriesStoreService,
+	) {}
 
-	constructor(private readonly changeDetectorRef: ChangeDetectorRef) {}
-
-	ngAfterContentInit() {
-		this.insertNavigationTemplate(this.navigationTemplate);
+	ngOnInit() {
+		this.categoriesStoreService.loadCategories();
 	}
+
+	onSubCategorySelect(subCategory: ISubCategory) {}
 
 	toggleSidenavOpened() {
 		this.drawer.toggle();
 		this.changeDetectorRef.markForCheck();
-	}
-
-	private insertNavigationTemplate(template: TemplateRef<unknown>) {
-		this.navigationViewPort.clear();
-		this.navigationViewPort.createEmbeddedView(template);
 	}
 }
