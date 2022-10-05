@@ -20,7 +20,16 @@ const routes: Routes = [
 	// },
 	{
 		path: 'products-list',
-		component: ProductsListComponent,
+		children: [
+			{
+				path: '',
+				component: ProductsListComponent,
+			},
+			{
+				path: ':subCategoryId',
+				component: ProductsListComponent,
+			},
+		],
 	},
 	{
 		path: 'product', // product/id
