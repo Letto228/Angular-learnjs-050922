@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { map, Observable } from 'rxjs';
+import { getParamsFromObject } from '../params/get-params-from-object';
 import { IProduct } from './product.interface';
 import { IProductsDto } from './products.dto';
 
@@ -10,9 +11,12 @@ import { IProductsDto } from './products.dto';
 export class ProductsApiService {
 	constructor(private readonly httpCient: HttpClient) {}
 
-	getProducts$(): Observable<IProduct[]> {
-		// return of({ data: { items: productsMock } }).pipe(map(({ data }) => data.items));
-		return this.httpCient.get<IProductsDto>(`/products/suggestion`).pipe(map(({ data }) => data.items));
+	getProducts$(subCategoryId?: string | null): Observable<IProduct[]> {
+		return this.httpCient
+			.get<IProductsDto>(`/products`, {
+				params: getParamsFromObject({ subCat: subCategoryId }),
+			})
+			.pipe(map(({ data }) => data.items));
 	}
 
 	getProduct$(id: string): Observable<IProduct | undefined> {
