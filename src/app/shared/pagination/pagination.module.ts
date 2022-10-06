@@ -7,4 +7,4 @@ import { PaginationDirective } from './pagination.directive';
 	imports: [CommonModule],
 	exports: [PaginationDirective],
 })
-export class CarouselModule {}
+export class PaginationModule {}

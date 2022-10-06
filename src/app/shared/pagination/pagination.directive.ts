@@ -1,61 +1,61 @@
-import { Directive, Input, OnDestroy, OnInit, TemplateRef, ViewContainerRef } from '@angular/core';
+import {
+  Directive,
+  Input,
+  OnChanges,
+  OnDestroy,
+  OnInit,
+  SimpleChanges,
+  TemplateRef,
+  ViewContainerRef
+} from '@angular/core';
 import { BehaviorSubject, map, Subject, takeUntil } from 'rxjs';
 
 interface IPaginationContext<T> {
-	$implicit: T;
+  $implicit: T[] | T;
 	appPaginationOf: T[]; // нет необходимости
-	index: number;
+  activeIndex: number;
+  totalPages: number[];
 	nextItem: () => void;
 	backItem: () => void;
+  selectPage: (pageIndex: number) => void;
 }
 
 @Directive({
 	selector: '[appPagination]',
 })
-export class PaginationDirective<T> implements OnInit, OnDestroy {
-	@Input() set appPaginationOf(items: T[] | undefined) {
-		if (!items?.length) {
-			this.viewContainerRef.clear();
+export class PaginationDirective<T> implements OnInit, OnChanges, OnDestroy {
+  @Input() appPaginationOf: T[] = [];
+  @Input() appPaginationPageSize = 4;
 
-			return;
-		}
-
-		this.items = items;
-		this.currentIndex$.next(0);
-	}
-
-	// @Output() emitNext = new EventEmitter<() => void>();
-	// @Output() emitBack = new EventEmitter<() => void>();
-
-	private items: T[] | null = null;
+  private chunks: Array<T[]> | T[] = [];
 
 	private readonly currentIndex$ = new BehaviorSubject<number>(0);
-	// private readonly subscription = new Subscription();
 	private readonly destroy$ = new Subject<void>();
 
 	constructor(
 		private readonly viewContainerRef: ViewContainerRef,
 		private readonly templateRef: TemplateRef<IPaginationContext<T>>,
-	) {}
+	) {
+    this.chunks = this.chunk(this.appPaginationOf, this.appPaginationPageSize);
+  }
 
 	ngOnInit() {
 		this.listenCurrentIndexChange();
-		// this.emitNext.emit(
-		//   () => {
-		//     this.nextItem()
-		//   }
-		// )
-		// this.emitBack.emit(this.backItem.bind(this))
 	}
 
-	ngOnDestroy() {
-		// this.subscription.unsubscribe();
+  ngOnChanges(changes: any) {
+    if (changes.appPaginationOf || changes.appPaginationPageSize) {
+      this.chunks = this.chunk(this.appPaginationOf, this.appPaginationPageSize);
+      this.currentIndex$.next(0);
+    }
+  }
+
+  ngOnDestroy() {
 		this.destroy$.next();
 		this.destroy$.complete();
 	}
 
 	private listenCurrentIndexChange() {
-		// this.subscription.add(
 		this.currentIndex$
 			.pipe(
 				map((index) => this.getCurrentContext(index)),
@@ -65,82 +65,67 @@ export class PaginationDirective<T> implements OnInit, OnDestroy {
 				this.viewContainerRef.clear();
 				this.viewContainerRef.createEmbeddedView(this.templateRef, context);
 			});
-		// )
 	}
 
 	private getCurrentContext(activeIndex: number): IPaginationContext<T> {
-		const items = this.items as T[];
-
 		return {
-			$implicit: items[activeIndex],
-			appPaginationOf: items,
-			index: activeIndex,
+			$implicit: this.chunks[activeIndex],
+      activeIndex: activeIndex,
+      appPaginationOf: <T[]>this.appPaginationOf,
+      totalPages: this.chunks.map((chunk, i) => i ),
 			nextItem: () => {
 				this.nextItem();
 			},
 			backItem: this.backItem.bind(this),
+			selectPage: (pageIndex) => {
+        this.selectPage(pageIndex);
+      }
 		};
 	}
 
 	private nextItem() {
 		const nextIndex = this.currentIndex$.value + 1;
 
-		if (!this.items?.length) {
+    if (this.chunks?.length <= nextIndex) {
 			return;
 		}
 
-		this.currentIndex$.next(nextIndex < this.items.length ? nextIndex : 0);
+		this.currentIndex$.next(nextIndex < this.appPaginationOf.length ? nextIndex : 0);
 	}
 
 	private backItem() {
 		const prevIndex = this.currentIndex$.value - 1;
 
-		if (!this.items?.length) {
+		if (!this.chunks?.length || prevIndex < 0) {
 			return;
 		}
 
-		this.currentIndex$.next(prevIndex >= 0 ? prevIndex : this.items.length - 1);
+    this.currentIndex$.next(prevIndex >= 0 ? prevIndex : this.chunks.length - 1);
 	}
+
+  private selectPage(pageIndex: number) {
+    if (this.appPaginationOf?.length < pageIndex) {
+      return;
+    }
+
+    this.currentIndex$.next(pageIndex);
+  }
+
+  private chunk(items: T[], size: number): Array<T[]> | T[] {
+    if (this.appPaginationPageSize <= 1) {
+      return items;
+    }
+
+    return items.reduce((result: Array<T[]>, item: T, index: number) => {
+      const chunkIndex = Math.floor(index/size);
+
+      if (!result[chunkIndex]) {
+        result[chunkIndex] = [];
+      }
+
+      result[chunkIndex].push(item)
+
+      return result
+    }, [])
+  }
 }
-// @Directive({
-//   selector: '[appPagination]'
-// })
-// export class PaginationDirective<T> implements OnChanges {
-//   @Input() appPaginationOf: T[] | undefined;
-
-//   constructor(
-//     private readonly viewContainerRef: ViewContainerRef,
-//     private readonly templateRef: TemplateRef<IPaginationContext<T>>,
-//   ) {}
-
-//   ngOnChanges({appPaginationOf}: SimpleChanges): void {
-//     if (appPaginationOf) {
-//       this.resetView()
-//     }
-//   }
-
-//   private resetView() {
-//     if (this.appPaginationOf?.length) {
-//       this.updateView(0);
-
-//       return;
-//     }
-
-//     this.viewContainerRef.clear();
-//   }
-
-//   private updateView(activeIndex: number) {
-//     const currentContext = this.getCurrentContext(activeIndex, this.appPaginationOf as T[]);
-
-//     this.viewContainerRef.clear();
-//     this.viewContainerRef.createEmbeddedView(this.templateRef, currentContext);
-//   }
-
-//   private getCurrentContext(activeIndex: number, items: T[]): IPaginationContext<T> {
-//     return {
-//       $implicit: items[activeIndex],
-//       appPagination: items,
-//       index: activeIndex,
-//     }
-//   }
-// }
