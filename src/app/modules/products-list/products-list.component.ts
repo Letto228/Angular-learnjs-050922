@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
-import { ActivatedRoute, Data } from '@angular/router';
-import { debounceTime, distinctUntilChanged, map, Observable, startWith, Subject, takeUntil, tap } from 'rxjs';
+import { ActivatedRoute } from '@angular/router';
+import { debounceTime, distinctUntilChanged, map, startWith, Subject, takeUntil } from 'rxjs';
 import { IProduct } from '../../shared/products/product.interface';
 import { ProductsStoreService } from '../../shared/products/products-store.service';
 
@@ -9,19 +9,10 @@ import { ProductsStoreService } from '../../shared/products/products-store.servi
 	selector: 'app-products-list',
 	templateUrl: './products-list.component.html',
 	styleUrls: ['./products-list.component.less'],
-	// providers: [
-	// 	{
-	// 		provide: 'name',
-	// 		useValue: 'ProductsListComponent',
-	// 	},
-	// ],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ProductsListComponent implements OnInit, OnDestroy {
 	readonly products$ = this.productsStoreService.products$;
-	// readonly products$ = this.activatedRoute.data.pipe(
-	// 	map<Data, IProduct[]>(({products}) => products)
-	// );
 
 	serachText = '';
 
@@ -45,10 +36,7 @@ export class ProductsListComponent implements OnInit, OnDestroy {
 	constructor(
 		private readonly productsStoreService: ProductsStoreService,
 		private readonly activatedRoute: ActivatedRoute,
-	) // @Inject('name') private readonly name: string,
-	{
-		// console.log(this.name);
-	}
+	) {}
 
 	ngOnInit() {
 		this.listenSubCategoryIdFromUrl();

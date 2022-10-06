@@ -31,12 +31,6 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 		ReactiveFormsModule,
 		FormsModule,
 	],
-	// providers: [
-	// 	{
-	// 		provide: 'name',
-	// 		useValue: 'ProductsListModule',
-	// 	},
-	// ],
 	exports: [ProductsListComponent],
 })
 export class ProductsListModule {}
