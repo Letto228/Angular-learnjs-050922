@@ -1,5 +1,5 @@
 import { Inject, Injectable } from '@angular/core';
-import { HttpRequest, HttpHandler, HttpEvent, HttpInterceptor, HttpResponse, HttpHeaders } from '@angular/common/http';
+import { HttpRequest, HttpHandler, HttpEvent, HttpInterceptor } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { BASE_URL } from './base-url.token';
 
@@ -10,19 +10,8 @@ export class BaseUrlInterceptor implements HttpInterceptor {
 	intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
 		const newRequest = request.clone({
 			url: this.baseUrl + request.url,
-			// headers: new HttpHeaders()
 		});
 
-		return next
-			.handle(newRequest)
-			.pipe
-			// tap(console.log),
-			// map(responce => responce.body
-			//   ? (responce as HttpResponse<IProductsDto>).clone({
-			//     body: responce.body.data.items
-			//   })
-			//   : responce),
-			// catchError()
-			();
+		return next.handle(newRequest);
 	}
 }
