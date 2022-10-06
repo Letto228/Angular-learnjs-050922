@@ -11,6 +11,8 @@ import { CarouselModule } from '../../shared/carousel/carousel.module';
 import { PaginationModule } from '../../shared/pagination/pagination.module';
 import { FilterByParamModule } from '../../shared/filter-by-param/filter-by-param.module';
 import { RouterModule } from '@angular/router';
+import { ProductsListRoutingModule } from './products-list-routing.module';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
 	declarations: [ProductsListComponent, ProductCardComponent],
@@ -25,13 +27,16 @@ import { RouterModule } from '@angular/router';
 		PaginationModule,
 		FilterByParamModule,
 		RouterModule,
+		ProductsListRoutingModule,
+		ReactiveFormsModule,
+		FormsModule,
 	],
-	providers: [
-		{
-			provide: 'token',
-			useValue: 'ProductsListModule',
-		},
-	],
+	// providers: [
+	// 	{
+	// 		provide: 'name',
+	// 		useValue: 'ProductsListModule',
+	// 	},
+	// ],
 	exports: [ProductsListComponent],
 })
 export class ProductsListModule {}

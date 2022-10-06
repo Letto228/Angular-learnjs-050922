@@ -7,8 +7,6 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HeaderModule } from './components/header/header.module';
 import { SidenavModule } from './components/sidenav/sidenav.module';
 import { MatListModule } from '@angular/material/list';
-import { ProductsListModule } from './modules/products-list/products-list.module';
-import { ProductModule } from './modules/product/product.module';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { BaseUrlInterceptor } from './shared/base-url/base-url.interceptor';
 import { NotFoundModule } from './modules/not-found/not-found.module';
@@ -22,8 +20,6 @@ import { NotFoundModule } from './modules/not-found/not-found.module';
 		HeaderModule,
 		SidenavModule,
 		MatListModule,
-		ProductsListModule,
-		ProductModule,
 		HttpClientModule,
 		NotFoundModule,
 	],
@@ -33,6 +29,10 @@ import { NotFoundModule } from './modules/not-found/not-found.module';
 			useClass: BaseUrlInterceptor,
 			multi: true,
 		},
+		// {
+		// 	provide: 'name',
+		// 	useValue: 'AppModule',
+		// },
 	],
 	bootstrap: [AppComponent],
 })

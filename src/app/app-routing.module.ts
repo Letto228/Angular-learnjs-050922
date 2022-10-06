@@ -1,48 +1,30 @@
 import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
+import { NoPreloading, PreloadAllModules, RouterModule, Routes } from '@angular/router';
 import { NotFoundComponent } from './modules/not-found/not-found.component';
-import { DescriptionComponent } from './modules/product/description/description.component';
-import { ProductComponent } from './modules/product/product.component';
-import { TypeComponent } from './modules/product/type/type.component';
-import { ProductsListComponent } from './modules/products-list/products-list.component';
+import { CustomPreloading } from './shared/custom-preloading/custom-preloading';
+import { QuestionCanActivateGuard } from './shared/guards/question-can-activate.guard';
+import { QuestionCanDeactivateGuard } from './shared/guards/question-can-deactivate.guard';
+import { QuestionCanLoadGuard } from './shared/guards/question-can-load.guard';
+import { ProductsResolver } from './shared/resolvers/products.resolver';
 
 const routes: Routes = [
 	{
 		path: 'products-list',
-		children: [
-			{
-				path: '',
-				component: ProductsListComponent,
-			},
-			{
-				path: ':subCategoryId',
-				component: ProductsListComponent,
-			},
-		],
+		loadChildren: () => import('./modules/products-list/products-list.module').then((m) => m.ProductsListModule),
+		// resolve: {
+		// 	products: ProductsResolver,
+		// } // {products: [...]}
+		// canLoad: [QuestionCanLoadGuard],
+		// canActivate: [QuestionCanActivateGuard],
+		// canLoad: [QuestionCanLoadGuard],
+		// data: {
+		// 	preloading: true,
+		// }
 	},
 	{
 		path: 'product',
-		children: [
-			{
-				path: ':id',
-				component: ProductComponent,
-				children: [
-					{
-						path: 'type',
-						component: TypeComponent,
-					},
-					{
-						path: 'description',
-						component: DescriptionComponent,
-					},
-					{
-						path: '',
-						redirectTo: 'description',
-						pathMatch: 'full',
-					},
-				],
-			},
-		],
+		loadChildren: () => import('./modules/product/product.module').then((m) => m.ProductModule),
+		canLoad: [QuestionCanLoadGuard],
 	},
 	{
 		path: '',
@@ -56,7 +38,11 @@ const routes: Routes = [
 ];
 
 @NgModule({
-	imports: [RouterModule.forRoot(routes)],
+	imports: [
+		RouterModule.forRoot(routes, {
+			preloadingStrategy: CustomPreloading,
+		}),
+	],
 	exports: [RouterModule],
 })
 export class AppRoutingModule {}

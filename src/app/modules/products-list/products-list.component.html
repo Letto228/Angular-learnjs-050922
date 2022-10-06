@@ -1,12 +1,31 @@
+<!-- <mat-form-field class="example-full-width" appearance="fill">
+    <mat-label>Search</mat-label>
+    <input
+        matInput
+        [formControl]="serachTextControl"
+    >
+</mat-form-field> -->
 <mat-form-field class="example-full-width" appearance="fill">
     <mat-label>Search</mat-label>
-    <input #input matInput>
+    <input
+        matInput
+        [ngModel]="serachText"
+        (ngModelChange)="serachText = $event"
+    >
 </mat-form-field>
-<p>{{input.value}}</p>
 
 <div *ngIf="(products$ | async) as products; else loader" class="container">
+    <!-- <ng-container *appPagination="
+        let productsGroup of (products | filterByParam : getSerachText(searchedText$ | async, '') : 'name');
+        elementsSize: 4;
+        let allIndexes = allIndexes;
+        let activeIndex = index;
+        let nextItem = nextItem;
+        let backItem = backItem;
+        let selectIndex = selectIndex
+    "> -->
     <ng-container *appPagination="
-        let productsGroup of (products | filterByParam : input.value : 'name');
+        let productsGroup of (products | filterByParam : serachText : 'name');
         elementsSize: 4;
         let allIndexes = allIndexes;
         let activeIndex = index;
