@@ -1,6 +1,6 @@
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { map } from 'rxjs';
+import { map, Subject, takeUntil } from 'rxjs';
 import { IProduct } from '../../shared/products/product.interface';
 import { ProductsStoreService } from '../../shared/products/products-store.service';
 
@@ -10,12 +10,10 @@ import { ProductsStoreService } from '../../shared/products/products-store.servi
 	styleUrls: ['./products-list.component.less'],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ProductsListComponent implements OnInit {
+export class ProductsListComponent implements OnInit, OnDestroy {
 	readonly products$ = this.productsStoreService.products$;
 
-	private readonly subCategoryId$ = this.activatedRoute.paramMap.pipe(
-		map((paramMap) => paramMap.get('subCategoryId')),
-	);
+	private readonly destroy$ = new Subject<void>();
 
 	constructor(
 		private readonly productsStoreService: ProductsStoreService,
@@ -23,12 +21,26 @@ export class ProductsListComponent implements OnInit {
 	) {}
 
 	ngOnInit() {
-		this.subCategoryId$.subscribe(console.log);
+		this.listenSubCategoryIdFromUrl();
+	}
 
-		this.productsStoreService.loadProducts();
+	ngOnDestroy() {
+		this.destroy$.next();
+		this.destroy$.complete();
 	}
 
 	trackBy(_index: number, item: IProduct) {
 		return item._id;
+	}
+
+	private listenSubCategoryIdFromUrl() {
+		this.activatedRoute.paramMap
+			.pipe(
+				map((paramMap) => paramMap.get('subCategoryId')),
+				takeUntil(this.destroy$),
+			)
+			.subscribe((subCategoryId) => {
+				this.productsStoreService.loadProducts(subCategoryId);
+			});
 	}
 }
