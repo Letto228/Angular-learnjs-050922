@@ -8,6 +8,21 @@
     [navigationTemplate]="navigationTemplate"
 > -->
 <app-sidenav #sidenav>
+    <div
+        class="infinite-scroll"
+        appScrollWithLoading
+        (loadData)="onLoadData($event)"
+    >
+        <p>Fish text</p>
+        <p>Fish text</p>
+        <p>Fish text</p>
+        <p>Fish text</p>
+        <p>Fish text</p>
+        <p>Fish text</p>
+        <p>Fish text</p>
+        <p>Fish text</p>
+    </div>
+
     <mat-form-field class="example-full-width" appearance="fill">
         <mat-label>Search</mat-label>
         <input #input matInput>

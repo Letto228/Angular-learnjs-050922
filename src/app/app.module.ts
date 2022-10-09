@@ -11,6 +11,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatListModule } from '@angular/material/list';
 import { NgClassModule } from './shared/ng-class/ng-class.module';
 import { InsertShadowModule } from './shared/insert-shadow/insert-shadow.module';
+import { ScrollWithLoadingModule } from './shared/scroll-with-loading/scroll-with-loading.module';
 
 @NgModule({
 	declarations: [AppComponent],
@@ -25,6 +26,7 @@ import { InsertShadowModule } from './shared/insert-shadow/insert-shadow.module'
 		MatListModule,
 		NgClassModule,
 		InsertShadowModule,
+		ScrollWithLoadingModule
 	],
 	bootstrap: [AppComponent],
 })
