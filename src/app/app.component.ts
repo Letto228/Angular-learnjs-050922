@@ -31,4 +31,8 @@ export class AppComponent implements AfterViewInit {
 	// onKeyDown(event: Event) {
 	// 	console.log(event);
 	// }
+
+	onLoadData(event: any) {
+		console.log(event);
+	}
 }
