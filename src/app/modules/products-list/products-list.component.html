@@ -4,15 +4,41 @@
         matInput
         [formControl]="serachTextControl"
     >
-</mat-form-field> -->
-<mat-form-field class="example-full-width" appearance="fill">
+</mat-form-field>
+{{serachTextControl.errors | json}}
+{{errors$ | async | json}} -->
+<!-- {{serachTextControl.valid}} -->
+<!-- <mat-form-field class="example-full-width" appearance="fill">
     <mat-label>Search</mat-label>
     <input
+        #input="ngModel"
         matInput
-        [ngModel]="serachText"
-        (ngModelChange)="serachText = $event"
+        appIsStringAsync
+        [(ngModel)]="serachText"
+        [ngModelOptions]="{
+            updateOn: 'blur'
+        }"
+    >
+    <input
+        #input="ngModel"
+        matInput
+        appIsString
+        minlength="3"
+        [(ngModel)]="serachText"
     >
 </mat-form-field>
+{{input.errors | json}}
+{{input.valid}} -->
+
+<!-- <app-counter-input [(ngModel)]="counter" [step]="100" [disabled]="true"></app-counter-input> -->
+<!-- <p>Interpolation {{counter}}</p> -->
+<!-- <app-counter-input [formControl]="counterControl" [step]="100"></app-counter-input>
+<p>Interpolation {{counterControl.value}}</p> -->
+
+<app-products-filter
+    [brands]="brands$ | async"
+    (changeFilter)="onFilterChange($event)"
+></app-products-filter>
 
 <div *ngIf="(products$ | async) as products; else loader" class="container">
     <!-- <ng-container *appPagination="

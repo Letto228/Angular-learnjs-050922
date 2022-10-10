@@ -13,9 +13,13 @@ import { FilterByParamModule } from '../../shared/filter-by-param/filter-by-para
 import { RouterModule } from '@angular/router';
 import { ProductsListRoutingModule } from './products-list-routing.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { CounterInputModule } from '../../shared/counter-input/counter-input.module';
+import { ValidationDirectivesModule } from '../../shared/validators/directives/validation-directives.module';
+import { ProductsFilterComponent } from './products-filter/products-filter.component';
+import { MatCheckboxModule } from '@angular/material/checkbox';
 
 @NgModule({
-	declarations: [ProductsListComponent, ProductCardComponent],
+	declarations: [ProductsListComponent, ProductCardComponent, ProductsFilterComponent],
 	imports: [
 		CommonModule,
 		MatCardModule,
@@ -30,6 +34,9 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 		ProductsListRoutingModule,
 		ReactiveFormsModule,
 		FormsModule,
+		CounterInputModule,
+		ValidationDirectivesModule,
+		MatCheckboxModule,
 	],
 	exports: [ProductsListComponent],
 })

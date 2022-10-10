@@ -2,6 +2,7 @@ import { Directive, ElementRef, Input, OnChanges, SimpleChange, SimpleChanges } 
 
 @Directive({
 	selector: '[appNgClass]',
+	exportAs: 'appNgClass',
 })
 export class NgClassDirective implements OnChanges {
 	@Input() appNgClass: Record<string, any> = {};
