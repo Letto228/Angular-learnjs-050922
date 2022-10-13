@@ -6,17 +6,8 @@
 
 <!-- <div *appLet="products as productsList" class="container"> -->
 <div *ngIf="products; else loader" class="container">
-    <!-- <ng-container *appPagination="
-        let productsGroup of (products | filterByParam : input.value : 'name');
-        elementsSize: 4;
-        let allIndexes = allIndexes;
-        let activeIndex = index;
-        let nextItem = nextItem;
-        let backItem = backItem;
-        let selectIndex = selectIndex
-    "> -->
     <ng-container *appPagination="
-        let productsGroup of products;
+        let productsGroup of (products | filterByParam : '96-planset-dexp-ursus-s290-32-gb-3g-cernyj' : '_id');
         elementsSize: 4;
         let allIndexes = allIndexes;
         let activeIndex = index;
@@ -24,6 +15,15 @@
         let backItem = backItem;
         let selectIndex = selectIndex
     ">
+<!--    <ng-container *appPagination="-->
+<!--        let productsGroup of products;-->
+<!--        elementsSize: 4;-->
+<!--        let allIndexes = allIndexes;-->
+<!--        let activeIndex = index;-->
+<!--        let nextItem = nextItem;-->
+<!--        let backItem = backItem;-->
+<!--        let selectIndex = selectIndex-->
+<!--    ">-->
         <div class="card-container">
             <!-- <p *ngFor="let product of productsGroup">
                 {{product | json}}
@@ -34,7 +34,7 @@
                 [product]="product"
             ></app-product-card>
         </div>
-    
+
         <div class="pagination-container">
             <button mat-icon-button (click)="backItem()">
                 <mat-icon>
