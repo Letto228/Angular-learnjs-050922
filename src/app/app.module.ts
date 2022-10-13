@@ -10,6 +10,18 @@ import { MatListModule } from '@angular/material/list';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { BaseUrlInterceptor } from './shared/base-url/base-url.interceptor';
 import { NotFoundModule } from './modules/not-found/not-found.module';
+import { StoreModule } from '@ngrx/store';
+import { storeReducer } from './store/reducer';
+import { environment } from '../environments/environment';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import { EffectsModule } from '@ngrx/effects';
+import { effects } from './store/effects';
+
+const devtoolsInstrument = [];
+
+if (!environment.production) {
+	devtoolsInstrument.push(StoreDevtoolsModule.instrument());
+}
 
 @NgModule({
 	declarations: [AppComponent],
@@ -22,6 +34,9 @@ import { NotFoundModule } from './modules/not-found/not-found.module';
 		MatListModule,
 		HttpClientModule,
 		NotFoundModule,
+		StoreModule.forRoot(storeReducer),
+		EffectsModule.forRoot(effects),
+		...devtoolsInstrument,
 	],
 	providers: [
 		{

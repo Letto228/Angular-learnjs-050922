@@ -1,6 +1,7 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
 import { AbstractControl, FormControl, ValidationErrors, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { select, Store } from '@ngrx/store';
 import {
 	BehaviorSubject,
 	debounceTime,
@@ -17,6 +18,10 @@ import { IProduct } from '../../shared/products/product.interface';
 import { ProductsStoreService } from '../../shared/products/products-store.service';
 import { isStringAsyncValdator } from '../../shared/validators/is-string-async.validator';
 import { isStringValdator } from '../../shared/validators/is-string.validator';
+import { loadProducts } from '../../store/products/products.actions';
+import { products, productsFeatureSelector } from '../../store/products/products.selectors';
+import { PRODUCTS_FEATURE } from '../../store/products/products.state';
+import { IState } from '../../store/reducer';
 import { IProductsFilter } from './products-filter.interface';
 
 @Component({
@@ -26,17 +31,21 @@ import { IProductsFilter } from './products-filter.interface';
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ProductsListComponent implements OnInit, OnDestroy {
-	readonly products$ = this.productsStoreService.products$;
 	readonly brands$ = this.brandsService.brands$;
+	// readonly products$ = this.productsStoreService.products$;
+	readonly products$ = this.store$.pipe(
+		// tap<IState>(console.log),
+		select(products),
+	);
 
 	private readonly _searchText$ = new BehaviorSubject<string>('');
 	private readonly destroy$ = new Subject<void>();
 
 	constructor(
-		private readonly productsStoreService: ProductsStoreService,
 		private readonly activatedRoute: ActivatedRoute,
 		// private readonly router: Router,
 		private readonly brandsService: BrandsService,
+		private readonly store$: Store<IState>,
 	) {}
 
 	get searchText$(): Observable<string> {
@@ -71,7 +80,8 @@ export class ProductsListComponent implements OnInit, OnDestroy {
 				takeUntil(this.destroy$),
 			)
 			.subscribe((subCategoryId) => {
-				this.productsStoreService.loadProducts(subCategoryId);
+				// this.productsStoreService.loadProducts(subCategoryId);
+				this.store$.dispatch(loadProducts(subCategoryId));
 				this.brandsService.loadBrands(subCategoryId);
 			});
 	}
