@@ -4,6 +4,5 @@ import { productsAdapter, productsIntialState } from './products.state';
 
 export const productsReducer = createReducer(
 	productsIntialState,
-	// on(addProducts, (productsState, action) => ({
 	on(addProducts, (state, { products }) => productsAdapter.setAll(products, state)),
 );

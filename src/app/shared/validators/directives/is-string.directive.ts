@@ -13,8 +13,7 @@ import { isStringValdator } from '../is-string.validator';
 	],
 })
 export class IsStringDirective implements Validator {
-	validate = isStringValdator;
-	// validate(control: AbstractControl): ValidationErrors | null {
-	//   return isStringValdator(control);
-	// }
+	validate(control: AbstractControl): ValidationErrors | null {
+		return isStringValdator(control);
+	}
 }
