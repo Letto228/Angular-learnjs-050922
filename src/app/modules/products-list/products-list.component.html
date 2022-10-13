@@ -4,26 +4,39 @@
 </mat-form-field>
 <p>{{input.value}}</p>
 
-<!-- <ng-template [ngIf]="products" [ngIfElse]="loader" let-productsList> -->
-<!-- <ng-template [ngIf]="products" [ngIfElse]="loader">
-    <app-product-card [product]="products[0]"></app-product-card>
-    <app-product-card [product]="products[1]"></app-product-card>
-    <app-product-card [product]="products[2]"></app-product-card>
-    <app-product-card [product]="products[3]"></app-product-card>
-</ng-template> -->
-<!-- <ng-container *ngIf="products as productsList; else loader"> -->
-<ng-container *ngIf="products; else loader">
-    <app-product-card [product]="products[0]"></app-product-card>
-    <app-product-card [product]="products[1]"></app-product-card>
-    <app-product-card [product]="products[2]"></app-product-card>
-    <app-product-card [product]="products[3]"></app-product-card>
-</ng-container>
+<ng-container *ngIf="products; else loader" >
+  <div *appPagination="
+         let chunk of products;
+         pageSize: 4;
+         let totalPages = totalPages;
+         let activeIndex = activeIndex;
+         let backItem = backItem;
+         let nextItem = nextItem;
+         let selectPage = selectPage;"
+  >
+    <div class="product-list">
+      <ng-container *ngIf="chunk?.length; else singleElementTemplate">
+        <app-product-card *ngFor="let product of chunk" [product]="product"></app-product-card>
+      </ng-container>
+      <ng-template #singleElementTemplate>
+        <app-product-card [product]="products[activeIndex]"></app-product-card>
+      </ng-template>
+    </div>
 
-<!-- <ng-template [appDumpNgIf]="true" let-value let-age="age" let-fn="fn">
-    {{value}}
-    {{age}}
-    {{fn()}}
-</ng-template> -->
+    <div>
+      <button mat-icon-button (click)="backItem()">
+        <mat-icon >chevron_left</mat-icon>
+      </button>
+      <button *ngFor="let i of totalPages" (click)="selectPage(i)" [class.page-active]="activeIndex === i">
+        {{ i + 1 }}
+      </button>
+      <button mat-icon-button (click)="nextItem()">
+        <mat-icon>chevron_right</mat-icon>
+      </button>
+    </div>
+
+  </div>
+</ng-container>
 
 <ng-template #loader>
     <mat-spinner class="loader"></mat-spinner>
