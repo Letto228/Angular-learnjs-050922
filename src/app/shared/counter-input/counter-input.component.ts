@@ -27,11 +27,6 @@ export class CounterInputComponent implements ControlValueAccessor {
 
 	constructor(private readonly changeDetectorRef: ChangeDetectorRef) {}
 
-	// value = '';
-
-	// writeValue(value: any) {
-	// this.value = value;
-	// }
 	writeValue(newCounter: number) {
 		this.counter = newCounter;
 

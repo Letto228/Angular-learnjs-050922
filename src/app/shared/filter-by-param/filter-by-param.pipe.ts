@@ -7,7 +7,7 @@ import { isString } from '../is-string/is-string.utils';
 export class FilterByParamPipe implements PipeTransform {
 	transform<T, P extends keyof T>(
 		items: T[] | undefined | null,
-		searchValue: T[P],
+		searchValue: T[P] | null,
 		searchingProperty: P,
 	): T[] | undefined | null {
 		return items?.filter((item) => {

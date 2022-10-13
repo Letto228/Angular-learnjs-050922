@@ -1,57 +1,11 @@
-<!-- <mat-form-field class="example-full-width" appearance="fill">
-    <mat-label>Search</mat-label>
-    <input
-        matInput
-        [formControl]="serachTextControl"
-    >
-</mat-form-field>
-{{serachTextControl.errors | json}}
-{{errors$ | async | json}} -->
-<!-- {{serachTextControl.valid}} -->
-<!-- <mat-form-field class="example-full-width" appearance="fill">
-    <mat-label>Search</mat-label>
-    <input
-        #input="ngModel"
-        matInput
-        appIsStringAsync
-        [(ngModel)]="serachText"
-        [ngModelOptions]="{
-            updateOn: 'blur'
-        }"
-    >
-    <input
-        #input="ngModel"
-        matInput
-        appIsString
-        minlength="3"
-        [(ngModel)]="serachText"
-    >
-</mat-form-field>
-{{input.errors | json}}
-{{input.valid}} -->
-
-<!-- <app-counter-input [(ngModel)]="counter" [step]="100" [disabled]="true"></app-counter-input> -->
-<!-- <p>Interpolation {{counter}}</p> -->
-<!-- <app-counter-input [formControl]="counterControl" [step]="100"></app-counter-input>
-<p>Interpolation {{counterControl.value}}</p> -->
-
 <app-products-filter
     [brands]="brands$ | async"
     (changeFilter)="onFilterChange($event)"
 ></app-products-filter>
 
 <div *ngIf="(products$ | async) as products; else loader" class="container">
-    <!-- <ng-container *appPagination="
-        let productsGroup of (products | filterByParam : getSerachText(searchedText$ | async, '') : 'name');
-        elementsSize: 4;
-        let allIndexes = allIndexes;
-        let activeIndex = index;
-        let nextItem = nextItem;
-        let backItem = backItem;
-        let selectIndex = selectIndex
-    "> -->
     <ng-container *appPagination="
-        let productsGroup of (products | filterByParam : serachText : 'name');
+        let productsGroup of (products | filterByParam : (searchText$ | async) : 'name');
         elementsSize: 4;
         let allIndexes = allIndexes;
         let activeIndex = index;
