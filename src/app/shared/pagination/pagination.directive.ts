@@ -35,17 +35,15 @@ export class PaginationDirective<T> implements OnInit, OnChanges, OnDestroy {
 	constructor(
 		private readonly viewContainerRef: ViewContainerRef,
 		private readonly templateRef: TemplateRef<IPaginationContext<T>>,
-	) {
-    this.chunks = this.chunk(this.appPaginationOf, this.appPaginationPageSize);
-  }
+	) {}
 
 	ngOnInit() {
 		this.listenCurrentIndexChange();
 	}
 
-  ngOnChanges(changes: any) {
-    if (changes.appPaginationOf || changes.appPaginationPageSize) {
-      this.chunks = this.chunk(this.appPaginationOf, this.appPaginationPageSize);
+  ngOnChanges({ appPaginationOf, appPaginationPageSize }: SimpleChanges) {
+    if (appPaginationOf || appPaginationPageSize) {
+      this.chunks = this.getChunks(this.appPaginationOf, this.appPaginationPageSize);
       this.currentIndex$.next(0);
     }
   }
@@ -71,7 +69,7 @@ export class PaginationDirective<T> implements OnInit, OnChanges, OnDestroy {
 		return {
 			$implicit: this.chunks[activeIndex],
       activeIndex: activeIndex,
-      appPaginationOf: <T[]>this.appPaginationOf,
+      appPaginationOf: this.appPaginationOf,
       totalPages: this.chunks.map((chunk, i) => i ),
 			nextItem: () => {
 				this.nextItem();
@@ -86,17 +84,13 @@ export class PaginationDirective<T> implements OnInit, OnChanges, OnDestroy {
 	private nextItem() {
 		const nextIndex = this.currentIndex$.value + 1;
 
-    if (this.chunks?.length <= nextIndex) {
-			return;
-		}
-
-		this.currentIndex$.next(nextIndex < this.appPaginationOf.length ? nextIndex : 0);
+		this.currentIndex$.next(nextIndex < this.chunks?.length ? nextIndex : 0);
 	}
 
 	private backItem() {
 		const prevIndex = this.currentIndex$.value - 1;
 
-		if (!this.chunks?.length || prevIndex < 0) {
+		if (!this.chunks?.length) {
 			return;
 		}
 
@@ -104,14 +98,14 @@ export class PaginationDirective<T> implements OnInit, OnChanges, OnDestroy {
 	}
 
   private selectPage(pageIndex: number) {
-    if (this.appPaginationOf?.length < pageIndex) {
+    if (this.appPaginationOf?.length < pageIndex || pageIndex < 0) {
       return;
     }
 
     this.currentIndex$.next(pageIndex);
   }
 
-  private chunk(items: T[], size: number): Array<T[]> | T[] {
+  private getChunks(items: T[], size: number): Array<T[]> | T[] {
     if (this.appPaginationPageSize <= 1) {
       return items;
     }
