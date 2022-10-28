@@ -2,6 +2,7 @@ import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit, ViewChil
 import { MatDrawer } from '@angular/material/sidenav';
 import { CategoriesStoreService } from '../../shared/categories/categories-store.service';
 import { ISubCategory } from '../../shared/categories/sub-category.interface';
+import {Router} from "@angular/router";
 
 @Component({
 	selector: 'app-sidenav',
@@ -17,13 +18,16 @@ export class SidenavComponent implements OnInit {
 	constructor(
 		private readonly changeDetectorRef: ChangeDetectorRef,
 		private readonly categoriesStoreService: CategoriesStoreService,
+    private readonly router: Router
 	) {}
 
 	ngOnInit() {
 		this.categoriesStoreService.loadCategories();
 	}
 
-	onSubCategorySelect(subCategory: ISubCategory) {}
+	onSubCategorySelect(subCategory: ISubCategory) {
+    this.router.navigate(['/products-list', subCategory._id]);
+  }
 
 	toggleSidenavOpened() {
 		this.drawer.toggle();
